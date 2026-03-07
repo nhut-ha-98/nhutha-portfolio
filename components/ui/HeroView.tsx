@@ -1,3 +1,4 @@
+import { AvatarView } from "@/components/ui/AvatarView";
 import type { AboutMe, Socialnetwork } from "@/data/rendercv";
 
 interface HeroViewProps {
@@ -6,6 +7,7 @@ interface HeroViewProps {
   location: string;
   email: string;
   phone: string;
+  photo?: string | null;
   social: Socialnetwork[];
   about: AboutMe[];
 }
@@ -28,6 +30,7 @@ export function HeroView({
   location,
   email,
   phone,
+  photo,
   social,
   about,
 }: HeroViewProps) {
@@ -36,9 +39,12 @@ export function HeroView({
   return (
     <div className="grid gap-8 lg:grid-cols-[1.2fr_0.8fr] lg:gap-12">
       <article className="space-y-6">
-        <h1 className="text-balance text-4xl font-black leading-tight tracking-tight text-[var(--ink)] sm:text-5xl lg:text-6xl">
-          {name}
-        </h1>
+        <div className="flex items-center gap-5">
+          <AvatarView name={name} src={photo} size="lg" />
+          <h1 className="text-balance text-4xl font-black leading-tight tracking-tight text-[var(--ink)] sm:text-5xl lg:text-6xl">
+            {name}
+          </h1>
+        </div>
         <p className="text-balance text-lg font-semibold text-[var(--ink-soft)] sm:text-xl">
           {headline}
         </p>

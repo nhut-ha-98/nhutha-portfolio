@@ -17,6 +17,7 @@ const defaultArgs = {
   location: "Phu Lam, Ho Chi Minh City, Vietnam",
   email: "nhutha98.engr@gmail.com",
   phone: "+84 329274848",
+  photo: null,
   social: [
     { network: "LinkedIn", username: "nhutha98" },
     { network: "GitHub", username: "nhut-ha-98" },

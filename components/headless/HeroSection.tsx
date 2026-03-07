@@ -13,6 +13,7 @@ export function HeroSection() {
         location={data.cv.location}
         email={data.cv.email}
         phone={data.cv.phone}
+        photo={data.cv.photo}
         social={data.cv.social_networks}
         about={aboutItems}
       />
