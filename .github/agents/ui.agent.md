@@ -40,3 +40,17 @@ type SkillCardProps = {
 ```
 
 UI components render these props with semantic HTML, motion hooks (optional), and responsive class sets, while headless parents control ordering and data preparation.
+
+Storybook Requirement
+
+All UI components must include Storybook stories.
+
+Storybook must be used for:
+
+component isolation
+
+visual testing
+
+theme testing
+
+UI documentation
