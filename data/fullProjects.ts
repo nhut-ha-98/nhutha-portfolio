@@ -7,6 +7,7 @@ export interface FullProject {
   techStack: Record<string, string[]>;
   products: string[];
   keyFeatures?: string[];
+  tags?: string[];
 }
 
 interface FirestoreDocLike {
@@ -18,10 +19,13 @@ interface FirestoreDocLike {
   techStack?: unknown;
   products?: unknown;
   keyFeatures?: unknown;
+  tags?: unknown;
 }
 
 function isStringArray(value: unknown): value is string[] {
-  return Array.isArray(value) && value.every((item) => typeof item === "string");
+  return (
+    Array.isArray(value) && value.every((item) => typeof item === "string")
+  );
 }
 
 function toTechStack(value: unknown): Record<string, string[]> {
@@ -60,5 +64,6 @@ export function toFullProject(value: unknown): FullProject | null {
     techStack: toTechStack(raw.techStack),
     products: isStringArray(raw.products) ? raw.products : [],
     keyFeatures: isStringArray(raw.keyFeatures) ? raw.keyFeatures : undefined,
+    tags: isStringArray(raw.tags) ? raw.tags : undefined,
   };
 }
