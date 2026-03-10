@@ -41,11 +41,11 @@ export interface Cv {
   headline: string;
   location: string;
   email: string;
-  photo: null;
+  photo: string | null;
   phone: string;
-  website: null;
+  website: string | null;
   social_networks: Socialnetwork[];
-  custom_connections: null;
+  custom_connections: string | null;
   sections: Sections;
 }
 
