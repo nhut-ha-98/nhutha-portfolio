@@ -18,7 +18,7 @@ export const data: RenderCvData = {
       "Senior Full-Stack Engineer (Java/Spring Boot, React/Next.js, AWS)",
     location: "Phu Lam, Ho Chi Minh City, Vietnam",
     email: "nhutha98.engr@gmail.com",
-    photo: null,
+    photo: "/me.jpg",
     phone: "+84 329274848",
     website: null,
     social_networks: [

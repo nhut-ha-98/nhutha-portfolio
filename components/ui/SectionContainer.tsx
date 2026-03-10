@@ -10,7 +10,7 @@ const spacingMap: Record<
   NonNullable<SectionContainerProps["spacing"]>,
   string
 > = {
-  hero: "py-14 sm:py-18 lg:py-24",
+  hero: "py-12 sm:py-14 lg:py-14",
   default: "py-10 sm:py-12 lg:py-14",
   header: "py-2 sm:py-3 lg:py-4",
 };
