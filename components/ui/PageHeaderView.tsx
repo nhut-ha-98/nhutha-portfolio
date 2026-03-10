@@ -7,12 +7,14 @@ interface PageHeaderViewProps {
   title: string;
   navItems: readonly NavItem[];
   isSticky?: boolean;
+  activeHref?: string;
 }
 
 export function PageHeaderView({
   title,
   navItems,
   isSticky = false,
+  activeHref,
 }: PageHeaderViewProps) {
   return (
     <header
@@ -28,16 +30,25 @@ export function PageHeaderView({
         </h2> */}
         <nav aria-label="Page sections" className="relative">
           <ul className="flex flex-wrap justify-end gap-2">
-            {navItems.map((item) => (
-              <li key={item.href}>
-                <a
-                  href={item.href}
-                  className="inline-flex min-h-10 items-center rounded-full border border-white/60 bg-white/50 px-4 text-xs font-semibold uppercase tracking-[0.08em] text-[var(--ink-soft)] shadow-[inset_0_1px_0_rgba(255,255,255,0.8),0_6px_14px_rgba(21,30,35,0.08)] transition hover:border-[var(--accent)]/55 hover:bg-white/68 hover:text-[var(--ink)] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--accent)]"
-                >
-                  {item.label}
-                </a>
-              </li>
-            ))}
+            {navItems.map((item) => {
+              const isActive = item.href === activeHref;
+
+              return (
+                <li key={item.href}>
+                  <a
+                    href={item.href}
+                    aria-current={isActive ? "location" : undefined}
+                    className={`inline-flex min-h-10 items-center rounded-full border px-4 text-xs font-semibold uppercase tracking-[0.08em] shadow-[inset_0_1px_0_rgba(255,255,255,0.8),0_6px_14px_rgba(21,30,35,0.08)] transition focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--accent)] ${
+                      isActive
+                        ? "border-[var(--accent)]/70 bg-[var(--accent)]/14 text-[var(--ink)]"
+                        : "border-white/60 bg-white/50 text-[var(--ink-soft)] hover:border-[var(--accent)]/55 hover:bg-white/68 hover:text-[var(--ink)]"
+                    }`}
+                  >
+                    {item.label}
+                  </a>
+                </li>
+              );
+            })}
           </ul>
         </nav>
       </div>
