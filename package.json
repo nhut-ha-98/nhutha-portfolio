@@ -11,10 +11,10 @@
     "build-storybook": "storybook build"
   },
   "dependencies": {
+    "@iconify/react": "^5.2.1",
     "next": "16.1.6",
     "react": "19.2.3",
     "react-dom": "19.2.3",
-    "simple-icons": "^16.11.0",
     "zustand": "^5.0.11"
   },
   "devDependencies": {

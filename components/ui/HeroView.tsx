@@ -1,5 +1,33 @@
 import { AvatarView } from "@/components/ui/AvatarView";
 import type { AboutMe, Socialnetwork } from "@/data/rendercv";
+import { Icon } from "@iconify/react";
+import Image from "next/image";
+const highlightBadges = [
+  { label: "Java", icon: "devicon:java", color: "#007396" },
+  {
+    label: "Spring Boot",
+    icon: "simple-icons:springboot",
+    color: "#6DB33F",
+  },
+  { label: "React", icon: "devicon:react", color: "#61DAFB" },
+  { label: "Next.js", icon: "devicon:nextjs", color: "#111111" },
+  { label: "AWS", icon: "logos:aws", color: "#FF9900" },
+] as const;
+
+const certificationLogos = [
+  {
+    label: "Back Khoa TP.HCM",
+    src: "/back-khoa-logo.webp",
+    width: 68,
+    height: 68,
+  },
+  {
+    label: "AWS Certified Solutions Architect Associate",
+    src: "/saa-c03.png",
+    width: 68,
+    height: 68,
+  },
+] as const;
 
 interface HeroViewProps {
   name: string;
@@ -84,6 +112,52 @@ export function HeroView({
             </li>
           ))}
         </ul>
+
+        <div className="flex gap-x-20 items-center flex-wrap">
+          <ul
+            className="flex flex-wrap items-center gap-5"
+            aria-label="Certification logos"
+          >
+            {certificationLogos.map((logo) => (
+              <li key={logo.label}>
+                <span
+                  className="inline-flex items-center justify-center rounded-xl "
+                  title={logo.label}
+                  aria-label={logo.label}
+                >
+                  <Image
+                    src={logo.src}
+                    alt={logo.label}
+                    width={logo.width}
+                    height={logo.height}
+                    className="h-auto w-auto object-contain"
+                  />
+                </span>
+              </li>
+            ))}
+          </ul>
+          <ul
+            className="flex flex-wrap gap-2"
+            aria-label="Highlighted technologies"
+          >
+            {highlightBadges.map((badge) => (
+              <li key={badge.label}>
+                <span
+                  className="inline-flex h-12 w-12 items-center justify-center rounded-full border border-[var(--line)] bg-white text-[var(--ink-soft)] transition hover:border-[var(--accent)]"
+                  title={badge.label}
+                  aria-label={badge.label}
+                >
+                  <Icon
+                    icon={badge.icon}
+                    aria-hidden="true"
+                    className="h-6 w-6"
+                    style={badge.color ? { color: badge.color } : undefined}
+                  />
+                </span>
+              </li>
+            ))}
+          </ul>
+        </div>
       </article>
 
       <aside className="relative overflow-hidden rounded-3xl border border-[var(--line)] bg-white p-6 shadow-[var(--shadow-card)] sm:p-8">
