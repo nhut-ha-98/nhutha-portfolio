@@ -2,7 +2,7 @@ import type { PropsWithChildren } from "react";
 
 interface SectionContainerProps extends PropsWithChildren {
   id?: string;
-  spacing?: "hero" | "default";
+  spacing?: "hero" | "default" | "header";
   sticky?: boolean;
 }
 
@@ -12,6 +12,7 @@ const spacingMap: Record<
 > = {
   hero: "py-14 sm:py-18 lg:py-24",
   default: "py-10 sm:py-12 lg:py-14",
+  header: "py-2 sm:py-3 lg:py-4",
 };
 
 export function SectionContainer({

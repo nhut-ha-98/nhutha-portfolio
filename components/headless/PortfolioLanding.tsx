@@ -8,13 +8,15 @@ import { LandingScaffold } from "@/components/ui/LandingScaffold";
 
 export function PortfolioLanding() {
   return (
-    <LandingScaffold>
+    <>
       <PageHeader />
-      <HeroSection />
-      <SkillsSection />
-      <ExperienceSection />
-      <ProjectsSection />
-      <ContactSection />
-    </LandingScaffold>
+      <LandingScaffold>
+        <HeroSection />
+        <SkillsSection />
+        <ExperienceSection />
+        <ProjectsSection />
+        <ContactSection />
+      </LandingScaffold>
+    </>
   );
 }

@@ -23,9 +23,9 @@ export function PageHeaderView({
       }`}
     >
       <div className="flex flex-wrap items-center justify-between gap-3">
-        <h2 className="relative text-sm font-bold uppercase tracking-[0.12em] text-[var(--ink-soft)]">
+        {/* <h2 className="relative text-sm font-bold uppercase tracking-[0.12em] text-[var(--ink-soft)]">
           {title}
-        </h2>
+        </h2> */}
         <nav aria-label="Page sections" className="relative">
           <ul className="flex flex-wrap justify-end gap-2">
             {navItems.map((item) => (

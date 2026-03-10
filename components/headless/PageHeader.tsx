@@ -5,7 +5,7 @@ import { SectionContainer } from "@/components/ui/SectionContainer";
 import { pageNavigation } from "@/data/data";
 import { useEffect, useRef, useState } from "react";
 
-const STICKY_OFFSET_PX = 0;
+const STICKY_TOP_OFFSET_PX = 8;
 
 export function PageHeader() {
   const sentinelRef = useRef<HTMLDivElement | null>(null);
@@ -25,7 +25,7 @@ export function PageHeader() {
       {
         root: null,
         threshold: 0,
-        rootMargin: `-${STICKY_OFFSET_PX}px 0px 0px 0px`,
+        rootMargin: `-${STICKY_TOP_OFFSET_PX}px 0px 0px 0px`,
       },
     );
 
@@ -38,9 +38,9 @@ export function PageHeader() {
 
   return (
     <>
-      <div ref={sentinelRef} aria-hidden="true" className="h-px w-full" />
-      <header className="sticky top-0 z-50">
-        <SectionContainer spacing="default">
+      <div ref={sentinelRef} aria-hidden="true" className="h-2 w-full" />
+      <header className="sticky top-2 z-50">
+        <SectionContainer spacing="header">
           <PageHeaderView
             title={pageNavigation.title}
             navItems={pageNavigation.items}
