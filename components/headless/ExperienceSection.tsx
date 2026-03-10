@@ -1,22 +1,13 @@
-"use client";
-
 import { ExperienceView } from "@/components/ui/ExperienceView";
 import { SectionContainer } from "@/components/ui/SectionContainer";
 import { SectionShell } from "@/components/ui/SectionShell";
 import { data } from "@/data/data";
-import { useHeadlessStore } from "@/stores/useHeadlessStore";
 
 function dateRange(start: string, end: string | null) {
   return `${start} - ${end ?? "present"}`;
 }
 
 export function ExperienceSection() {
-  const isVisible = useHeadlessStore((state) => state.sections.experience);
-
-  if (!isVisible) {
-    return null;
-  }
-
   const experiences = data.cv.sections.Experience.map((item) => ({
     title: item.company,
     subtitle: item.position,

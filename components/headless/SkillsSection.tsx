@@ -1,18 +1,9 @@
-"use client";
-
 import { SectionContainer } from "@/components/ui/SectionContainer";
 import { SectionShell } from "@/components/ui/SectionShell";
 import { SkillSectionsView } from "@/components/ui/SkillSectionsView";
 import { data } from "@/data/data";
-import { useHeadlessStore } from "@/stores/useHeadlessStore";
 
 export function SkillsSection() {
-  const isVisible = useHeadlessStore((state) => state.sections.skills);
-
-  if (!isVisible) {
-    return null;
-  }
-
   const sections = [
     {
       title: "Primary Skills",
