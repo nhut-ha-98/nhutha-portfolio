@@ -84,23 +84,46 @@ function SkillIconBadge({
   skill,
   icon,
   color,
+  compact,
 }: {
   skill: string;
   icon: string;
   color?: string;
+  compact?: boolean;
 }) {
   return (
     <span
-      className="inline-flex items-center gap-2 rounded-full border border-[var(--line)] bg-white px-2.5 py-1 text-xs font-medium text-[var(--ink-soft)]"
+      className={`inline-flex items-center rounded-full border border-[var(--line)] bg-white font-semibold text-[var(--ink-soft)] ${
+        compact ? "gap-2 px-3 py-1.5 text-xs" : "gap-2.5 px-3.5 py-2 text-sm"
+      }`}
       title={skill}
     >
       <Icon
         icon={icon}
         aria-hidden="true"
-        className="h-3.5 w-3.5 shrink-0"
+        className={compact ? "h-3.5 w-3.5 shrink-0" : "h-4 w-4 shrink-0"}
         style={color ? { color } : undefined}
       />
       <span>{skill}</span>
+    </span>
+  );
+}
+
+function SkillTextBadge({
+  skill,
+  compact,
+}: {
+  skill: string;
+  compact?: boolean;
+}) {
+  return (
+    <span
+      className={`inline-flex items-center rounded-full border border-[var(--line)] bg-[var(--surface)] font-semibold text-[var(--muted-strong)] ${
+        compact ? "px-3 py-1.5 text-xs" : "px-3.5 py-2 text-sm"
+      }`}
+      title={skill}
+    >
+      {skill}
     </span>
   );
 }
@@ -114,51 +137,104 @@ interface SkillSectionsViewProps {
 
 export function SkillSectionsView({ sections }: SkillSectionsViewProps) {
   return (
-    <div className="grid gap-6 lg:grid-cols-2">
-      {sections.map((section) => (
-        <article
-          key={section.title}
-          className="rounded-2xl border border-[var(--line)] bg-white p-6 shadow-[var(--shadow-card)]"
-        >
-          <h3 className="text-lg font-bold text-[var(--ink)]">
-            {section.title}
-          </h3>
-          <div className="mt-4 space-y-4">
-            {section.items.map((item) => (
-              <div
-                key={item.label}
-                className="rounded-xl bg-[var(--surface)] p-4"
-              >
-                <p className="font-semibold text-[var(--ink-soft)]">
-                  {item.label}
-                </p>
-                <p className="mt-2 text-sm leading-6 text-[var(--muted-strong)]">
-                  {item.details}
-                </p>
-                <div className="mt-3 flex flex-wrap gap-2">
-                  {parseSkillTokens(item.details)
-                    .map((skill) => {
-                      const iconSpec = resolveIcon(skill);
-                      if (!iconSpec) {
-                        return null;
-                      }
+    <div className="mx-auto grid w-full max-w-5xl gap-10">
+      {sections.map((section) => {
+        const isPrimary = section.title.toLowerCase().includes("primary");
 
-                      return (
-                        <SkillIconBadge
-                          key={`${item.label}-${skill}`}
-                          skill={skill}
-                          icon={iconSpec.icon}
-                          color={iconSpec.color}
-                        />
-                      );
-                    })
-                    .filter(Boolean)}
-                </div>
-              </div>
-            ))}
-          </div>
-        </article>
-      ))}
+        return (
+          <section
+            key={section.title}
+            className={
+              isPrimary ? "space-y-6 text-center" : "space-y-4 text-center"
+            }
+          >
+            <div className="flex justify-center">
+              <h3
+                className={`relative inline-flex items-center rounded-full border bg-white font-bold text-[var(--ink)] ${
+                  isPrimary
+                    ? "border-[#1D9BF0]/40 px-5 py-2.5 text-xl shadow-[0_8px_24px_rgba(29,155,240,0.14)]"
+                    : "border-[var(--line)] px-4 py-2 text-base"
+                }`}
+              >
+                <span
+                  aria-hidden="true"
+                  className={`mr-3 inline-block rounded-full ${
+                    isPrimary ? "h-3 w-3" : "h-2.5 w-2.5"
+                  }`}
+                  style={{
+                    backgroundColor: isPrimary ? "#1D9BF0" : "#22A06B",
+                  }}
+                />
+                {section.title}
+              </h3>
+            </div>
+
+            <div
+              className={`grid gap-4 ${
+                isPrimary
+                  ? "md:grid-cols-1"
+                  : "mx-auto max-w-4xl md:grid-cols-2"
+              }`}
+            >
+              {section.items.map((item) => {
+                const tokens = parseSkillTokens(item.details);
+
+                return (
+                  <article
+                    key={item.label}
+                    className={`rounded-2xl border text-left ${
+                      isPrimary
+                        ? "border-[#1D9BF0]/30 bg-white p-5 shadow-[0_10px_28px_rgba(29,155,240,0.10)]"
+                        : "border-[var(--line)] bg-[var(--surface)] p-4"
+                    }`}
+                  >
+                    <p
+                      className={`font-bold uppercase tracking-[0.14em] text-[var(--ink-soft)] ${
+                        isPrimary ? "text-sm" : "text-xs"
+                      }`}
+                    >
+                      {item.label}
+                    </p>
+                    <p
+                      className={`mt-2 text-[var(--muted-strong)] ${
+                        isPrimary ? "text-sm leading-7" : "text-xs leading-6"
+                      }`}
+                    >
+                      {item.details}
+                    </p>
+                    <div
+                      className={`mt-3 flex flex-wrap gap-2 ${isPrimary ? "" : "gap-1.5"}`}
+                    >
+                      {tokens.map((skill) => {
+                        const iconSpec = resolveIcon(skill);
+                        if (!iconSpec) {
+                          return (
+                            <SkillTextBadge
+                              key={`${item.label}-${skill}`}
+                              skill={skill}
+                              compact={!isPrimary}
+                            />
+                          );
+                        }
+
+                        return (
+                          <SkillIconBadge
+                            key={`${item.label}-${skill}`}
+                            skill={skill}
+                            icon={iconSpec.icon}
+                            color={iconSpec.color}
+                            compact={!isPrimary}
+                          />
+                        );
+                      })}
+                    </div>
+                  </article>
+                );
+              })}
+            </div>
+          </section>
+        );
+      })}
     </div>
   );
 }
