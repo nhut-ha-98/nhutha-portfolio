@@ -35,6 +35,8 @@ export function HeroContactLinks({
 }: HeroContactLinksProps) {
   const [activeId, setActiveId] = useState<string>("contact-email");
   const detailRefs = useRef<Record<string, HTMLAnchorElement | null>>({});
+  const chipRefs = useRef<Record<string, HTMLLIElement | null>>({});
+  const [isSwitching, setIsSwitching] = useState(false);
 
   const socialItems = useMemo(
     () =>
@@ -72,16 +74,47 @@ export function HeroContactLinks({
   );
 
   useEffect(() => {
+    const activeChip = chipRefs.current[activeId];
     const activeDetail = detailRefs.current[activeId];
+    if (activeChip) {
+      animate(activeChip, {
+        scale: [1, 1.03, 1],
+        duration: 280,
+        ease: "out(3)",
+      });
+    }
+
     if (!activeDetail) return;
 
     animate(activeDetail, {
       opacity: [0, 1],
-      translateX: [8, 0],
-      duration: 220,
-      ease: "out(2)",
+      translateX: [10, 0],
+      duration: 280,
+      ease: "out(4)",
     });
   }, [activeId]);
+
+  function handleSelect(nextId: string) {
+    if (nextId === activeId || isSwitching) return;
+
+    const currentDetail = detailRefs.current[activeId];
+    if (!currentDetail) {
+      setActiveId(nextId);
+      return;
+    }
+
+    setIsSwitching(true);
+    animate(currentDetail, {
+      opacity: [1, 0],
+      translateX: [0, -8],
+      duration: 150,
+      ease: "in(3)",
+      onComplete: () => {
+        setActiveId(nextId);
+        setIsSwitching(false);
+      },
+    });
+  }
 
   return (
     <div className="space-y-2.5">
@@ -95,6 +128,9 @@ export function HeroContactLinks({
           return (
             <li
               key={item.id}
+              ref={(node) => {
+                chipRefs.current[item.id] = node;
+              }}
               className={`inline-flex items-center rounded-full border px-2 py-1 text-xs transition ${
                 isOpen
                   ? "border-[var(--accent)] bg-[var(--surface)] text-[var(--ink)]"
@@ -103,10 +139,11 @@ export function HeroContactLinks({
             >
               <button
                 type="button"
-                onClick={() => setActiveId(item.id)}
+                onClick={() => handleSelect(item.id)}
                 className="inline-flex items-center gap-1.5 rounded-full px-1 py-0.5 font-medium transition hover:text-[var(--ink)] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--accent)]"
                 aria-expanded={isOpen}
                 aria-label={`${item.label} details`}
+                disabled={isSwitching}
               >
                 <Icon
                   icon={item.icon}
