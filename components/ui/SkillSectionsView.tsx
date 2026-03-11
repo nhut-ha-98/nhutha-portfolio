@@ -58,6 +58,8 @@ const ICON_KEYWORD_TO_ICONIFY: IconSpec[] = [
   { keyword: "aws", icon: "simple-icons:amazon", color: "#FF9900" },
 ];
 
+const FEATURED_SKILL_KEYWORDS = ["java", "spring boot", "react", "aws"];
+
 function parseSkillTokens(details: string): string[] {
   const expanded = details.replaceAll(/\(([^)]+)\)/g, ", $1");
   const tokens = expanded
@@ -81,28 +83,51 @@ function resolveIcon(skill: string): IconSpec | undefined {
   return match;
 }
 
+function isFeaturedSkill(skill: string): boolean {
+  const normalized = skill.toLowerCase();
+  return FEATURED_SKILL_KEYWORDS.some((keyword) => normalized === keyword);
+}
+
 function SkillIconBadge({
   skill,
   icon,
   color,
   compact,
+  highlighted,
 }: {
   skill: string;
   icon: string;
   color?: string;
   compact?: boolean;
+  highlighted?: boolean;
 }) {
+  let sizeClass = "gap-2.5 px-3.5 py-2 text-sm";
+  if (compact && !highlighted) {
+    sizeClass = "gap-2 px-3 py-1.5 text-xs";
+  } else if (!compact && highlighted) {
+    sizeClass = "gap-3 px-4 py-2.5 text-base";
+  }
+
+  let iconSizeClass = "h-4 w-4 shrink-0";
+  if (compact && !highlighted) {
+    iconSizeClass = "h-3.5 w-3.5 shrink-0";
+  } else if (!compact && highlighted) {
+    iconSizeClass = "h-5 w-5 shrink-0";
+  }
+
   return (
     <span
-      className={`inline-flex items-center rounded-full border border-[var(--line)] bg-white font-semibold text-[var(--ink-soft)] ${
-        compact ? "gap-2 px-3 py-1.5 text-xs" : "gap-2.5 px-3.5 py-2 text-sm"
-      }`}
+      className={`inline-flex items-center rounded-full border font-semibold ${
+        highlighted
+          ? "border-[#1D9BF0]/45 bg-gradient-to-r from-[#EAF5FF] via-[#F0FFF7] to-[#FFF7E8] text-[var(--ink)] shadow-[0_8px_20px_rgba(29,155,240,0.16)]"
+          : "border-[var(--line)] bg-white text-[var(--ink-soft)]"
+      } ${sizeClass}`}
       title={skill}
     >
       <Icon
         icon={icon}
         aria-hidden="true"
-        className={compact ? "h-3.5 w-3.5 shrink-0" : "h-4 w-4 shrink-0"}
+        className={iconSizeClass}
         style={color ? { color } : undefined}
       />
       <span>{skill}</span>
@@ -113,15 +138,26 @@ function SkillIconBadge({
 function SkillTextBadge({
   skill,
   compact,
+  highlighted,
 }: {
   skill: string;
   compact?: boolean;
+  highlighted?: boolean;
 }) {
+  let sizeClass = "px-3.5 py-2 text-sm";
+  if (compact && !highlighted) {
+    sizeClass = "px-3 py-1.5 text-xs";
+  } else if (!compact && highlighted) {
+    sizeClass = "px-4 py-2.5 text-base";
+  }
+
   return (
     <span
-      className={`inline-flex items-center rounded-full border border-[var(--line)] bg-[var(--surface)] font-semibold text-[var(--muted-strong)] ${
-        compact ? "px-3 py-1.5 text-xs" : "px-3.5 py-2 text-sm"
-      }`}
+      className={`inline-flex items-center rounded-full border font-semibold ${
+        highlighted
+          ? "border-[#1D9BF0]/45 bg-gradient-to-r from-[#EAF5FF] via-[#F0FFF7] to-[#FFF7E8] text-[var(--ink)] shadow-[0_8px_20px_rgba(29,155,240,0.16)]"
+          : "border-[var(--line)] bg-[var(--surface)] text-[var(--muted-strong)]"
+      } ${sizeClass}`}
       title={skill}
     >
       {skill}
@@ -189,12 +225,14 @@ export function SkillSectionsView({ sections }: SkillSectionsViewProps) {
                     >
                       {tokens.map((skill) => {
                         const iconSpec = resolveIcon(skill);
+                        const highlighted = isFeaturedSkill(skill);
                         if (!iconSpec) {
                           return (
                             <SkillTextBadge
                               key={`${item.label}-${skill}`}
                               skill={skill}
                               compact={!isPrimary}
+                              highlighted={highlighted}
                             />
                           );
                         }
@@ -206,6 +244,7 @@ export function SkillSectionsView({ sections }: SkillSectionsViewProps) {
                             icon={iconSpec.icon}
                             color={iconSpec.color}
                             compact={!isPrimary}
+                            highlighted={highlighted}
                           />
                         );
                       })}
