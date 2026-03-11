@@ -1,4 +1,4 @@
-import { ExperienceView } from "@/components/ui/ExperienceView";
+import { EducationView, ExperienceView } from "@/components/ui/ExperienceView";
 import { SectionContainer } from "@/components/ui/SectionContainer";
 import { SectionShell } from "@/components/ui/SectionShell";
 import { data } from "@/data/data";
@@ -25,14 +25,20 @@ export function ExperienceSection() {
 
   return (
     <SectionContainer id="experience" spacing="default">
-      <SectionShell title="Experience">
-        <ExperienceView
-          experienceTitle="Experience"
-          educationTitle="Education and Certifications"
-          experiences={experiences}
-          education={education}
-        />
-      </SectionShell>
+      <div className="space-y-10">
+        <SectionShell title="Education and Certifications">
+          <EducationView
+            educationTitle="Education and Certifications"
+            education={education}
+          />
+        </SectionShell>
+        <SectionShell title="Experience">
+          <ExperienceView
+            experienceTitle="Experience"
+            experiences={experiences}
+          />
+        </SectionShell>
+      </div>
     </SectionContainer>
   );
 }

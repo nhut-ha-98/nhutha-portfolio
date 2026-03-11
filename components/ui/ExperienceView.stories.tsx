@@ -14,7 +14,6 @@ type Story = StoryObj<typeof ExperienceView>;
 export const Default: Story = {
   args: {
     experienceTitle: "Experience",
-    educationTitle: "Education & Certifications",
     experiences: [
       {
         title: "Blue Dragon Communications",
@@ -36,25 +35,12 @@ export const Default: Story = {
         ],
       },
     ],
-    education: [
-      {
-        institution: "Bach Khoa TPHCM (HCMUT)",
-        area: "Electronics and Telecommunication Engineering",
-        period: "2016-09 - 2020-11",
-      },
-      {
-        institution: "Amazon Web Services (AWS)",
-        area: "Certified Solutions Architect – Associate",
-        period: "2026-01",
-      },
-    ],
   },
 };
 
 export const SingleExperience: Story = {
   args: {
     experienceTitle: "Experience",
-    educationTitle: "Education",
     experiences: [
       {
         title: "Acme Corp",
@@ -64,13 +50,6 @@ export const SingleExperience: Story = {
           "Led the development of a new microservices architecture",
           "Reduced infrastructure costs by 40%",
         ],
-      },
-    ],
-    education: [
-      {
-        institution: "State University",
-        area: "Computer Science",
-        period: "2015-09 - 2019-06",
       },
     ],
   },
