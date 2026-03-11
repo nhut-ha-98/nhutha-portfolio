@@ -1,5 +1,6 @@
 import type { AboutMe } from "@/data/rendercv";
 import { Icon } from "@iconify/react";
+import { ColorUnderlineHeader } from "./ColorUnderlineHeader";
 
 type IconSpec = {
   keyword: string;
@@ -148,31 +149,12 @@ export function SkillSectionsView({ sections }: SkillSectionsViewProps) {
               isPrimary ? "space-y-6 text-center" : "space-y-4 text-center"
             }
           >
-            <div className="flex justify-center">
-              <h3
-                className={`relative inline-flex items-center rounded-full border bg-white font-bold text-[var(--ink)] ${
-                  isPrimary
-                    ? "border-[#1D9BF0]/40 px-5 py-2.5 text-xl shadow-[0_8px_24px_rgba(29,155,240,0.14)]"
-                    : "border-[var(--line)] px-4 py-2 text-base"
-                }`}
-              >
-                <span
-                  aria-hidden="true"
-                  className={`mr-3 inline-block rounded-full ${
-                    isPrimary ? "h-3 w-3" : "h-2.5 w-2.5"
-                  }`}
-                  style={{
-                    backgroundColor: isPrimary ? "#1D9BF0" : "#22A06B",
-                  }}
-                />
-                {section.title}
-              </h3>
-            </div>
+            <ColorUnderlineHeader title={section.title} primary={isPrimary} />
 
             <div
               className={`grid gap-4 ${
                 isPrimary
-                  ? "md:grid-cols-1"
+                  ? "md:grid-cols-1 max-w-4xl mx-auto"
                   : "mx-auto max-w-4xl md:grid-cols-2"
               }`}
             >

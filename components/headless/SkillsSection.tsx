@@ -17,7 +17,7 @@ export function SkillsSection() {
 
   return (
     <SectionContainer id="skills" spacing="default">
-      <SectionShell title="Skills">
+      <SectionShell title="">
         <SkillSectionsView sections={sections} />
       </SectionShell>
     </SectionContainer>
