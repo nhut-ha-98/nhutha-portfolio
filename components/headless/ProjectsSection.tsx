@@ -27,7 +27,7 @@ export function ProjectsSection() {
   return (
     <SectionContainer id="projects" spacing="default">
       <SectionShell title="Projects">
-        <div className="mb-5 flex justify-end -mt-6">
+        <div className="mb-5 flex justify-end -mt-17">
           <Link
             href="/projects"
             aria-label="View full projects"
