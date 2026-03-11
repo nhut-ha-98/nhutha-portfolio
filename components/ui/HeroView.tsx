@@ -1,4 +1,5 @@
 import { AvatarView } from "@/components/ui/AvatarView";
+import { HeroContactLinks } from "@/components/ui/HeroContactLinks";
 import type { AboutMe, Socialnetwork } from "@/data/rendercv";
 import { Icon } from "@iconify/react";
 import Image from "next/image";
@@ -40,14 +41,6 @@ interface HeroViewProps {
   about: AboutMe[];
 }
 
-function socialUrl(network: string, username: string) {
-  const key = network.toLowerCase();
-  if (key.includes("linkedin"))
-    return `https://www.linkedin.com/in/${username}`;
-  if (key.includes("github")) return `https://github.com/${username}`;
-  return "#";
-}
-
 function cleanRichText(text: string) {
   return text.replaceAll("**", "");
 }
@@ -80,38 +73,7 @@ export function HeroView({
           {location}
         </p>
 
-        <div className="grid gap-3 sm:grid-cols-2">
-          <a
-            href={`mailto:${email}`}
-            className="inline-flex min-h-11 items-center justify-center rounded-full bg-[var(--accent)] px-5 text-sm font-semibold text-white transition hover:brightness-110 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--accent)]"
-          >
-            {email}
-          </a>
-          <a
-            href={`tel:${phone.replaceAll(" ", "")}`}
-            className="inline-flex min-h-11 items-center justify-center rounded-full border border-[var(--line)] bg-white px-5 text-sm font-semibold text-[var(--ink-soft)] transition hover:border-[var(--accent)] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--accent)]"
-          >
-            {phone}
-          </a>
-        </div>
-
-        <ul className="flex flex-wrap gap-3" aria-label="Social profiles">
-          {social.map((entry) => (
-            <li key={`${entry.network}-${entry.username}`}>
-              <a
-                href={socialUrl(entry.network, entry.username)}
-                target="_blank"
-                rel="noreferrer"
-                className="inline-flex items-center gap-2 rounded-lg border border-[var(--line)] bg-white px-3 py-2 text-sm font-medium text-[var(--ink-soft)] transition hover:border-[var(--accent)] hover:text-[var(--ink)] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--accent)]"
-              >
-                <span>{entry.network}</span>
-                <span className="font-mono text-xs text-[var(--muted)]">
-                  {entry.username}
-                </span>
-              </a>
-            </li>
-          ))}
-        </ul>
+        <HeroContactLinks email={email} phone={phone} social={social} />
 
         <div className="flex gap-x-20 items-center flex-wrap">
           <ul
