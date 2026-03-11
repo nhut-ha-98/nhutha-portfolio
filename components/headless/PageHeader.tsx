@@ -97,7 +97,7 @@ export function PageHeader() {
   return (
     <>
       <div ref={sentinelRef} aria-hidden="true" className="h-2 w-full" />
-      <header className="sticky top-2 z-50">
+      <header className="sticky bottom-2 z-50">
         <SectionContainer spacing="header">
           <PageHeaderView
             title={pageNavigation.title}

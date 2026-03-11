@@ -1,3 +1,8 @@
+"use client";
+
+import { animate } from "animejs";
+import { useEffect, useRef } from "react";
+
 interface NavItem {
   href: string;
   label: string;
@@ -71,9 +76,79 @@ export function PageHeaderView({
   isSticky = false,
   activeHref,
 }: PageHeaderViewProps) {
+  const headerRef = useRef<HTMLElement | null>(null);
+  const navListRef = useRef<HTMLUListElement | null>(null);
+
+  useEffect(() => {
+    const headerElement = headerRef.current;
+    const navElement = navListRef.current;
+
+    if (!headerElement || !navElement) {
+      return;
+    }
+
+    const navButtons = Array.from(
+      navElement.querySelectorAll<HTMLElement>(".page-nav-item"),
+    );
+
+    animate(headerElement, {
+      opacity: [0, 1],
+      translateY: [-12, 0],
+      duration: 520,
+      ease: "out(4)",
+    });
+
+    navButtons.forEach((button, index) => {
+      animate(button, {
+        opacity: [0, 1],
+        translateY: [10, 0],
+        duration: 380,
+        delay: 110 + index * 70,
+        ease: "out(3)",
+      });
+    });
+  }, []);
+
+  useEffect(() => {
+    const headerElement = headerRef.current;
+
+    if (!headerElement) {
+      return;
+    }
+
+    animate(headerElement, {
+      scale: [1, isSticky ? 1.01 : 1],
+      translateY: [isSticky ? -3 : 0, 0],
+      duration: 320,
+      ease: "out(3)",
+    });
+  }, [isSticky]);
+
+  useEffect(() => {
+    if (!activeHref) {
+      return;
+    }
+
+    const navElement = navListRef.current;
+    const activeNav = navElement?.querySelector<HTMLElement>(
+      `[data-nav-href="${activeHref}"]`,
+    );
+
+    if (!activeNav) {
+      return;
+    }
+
+    animate(activeNav, {
+      scale: [1, 1.06, 1],
+      duration: 300,
+      ease: "out(4)",
+    });
+  }, [activeHref]);
+
   return (
     <header
-      className={`relative overflow-hidden rounded-2xl border border-white/55 bg-[linear-gradient(135deg,rgba(255,255,255,0.72),rgba(255,255,255,0.38))] p-4 ring-1 ring-[rgba(255,255,255,0.45)] backdrop-blur-xl backdrop-saturate-150 transition-[box-shadow,transform,background-color,border-color] duration-300 before:pointer-events-none before:absolute before:inset-0 before:bg-[radial-gradient(circle_at_16%_18%,rgba(255,255,255,0.48),transparent_45%),radial-gradient(circle_at_84%_78%,rgba(221,108,47,0.2),transparent_48%)] sm:p-5 ${
+      ref={headerRef}
+      className={`py-2 px-4 sm:px-5 w-full sm:w-fit mx-auto relative overflow-hidden rounded-2xl border border-white/55 bg-[linear-gradient(135deg,rgba(255,255,255,0.72),rgba(255,255,255,0.38))] ring-1 ring-[rgba(255,255,255,0.45)] backdrop-blur-xl backdrop-saturate-150 transition-[box-shadow,transform,background-color,border-color] duration-300 before:pointer-events-none before:absolute before:inset-0 before:bg-[radial-gradient(circle_at_16%_18%,rgba(255,255,255,0.48),transparent_45%),radial-gradient(circle_at_84%_78%,rgba(221,108,47,0.2),transparent_48%)] ${
         isSticky
           ? "border-white/70 bg-[linear-gradient(135deg,rgba(255,255,255,0.78),rgba(255,255,255,0.48))] shadow-[0_20px_44px_rgba(30,34,26,0.22)]"
           : "shadow-[0_16px_40px_rgba(30,34,26,0.16)]"
@@ -82,17 +157,21 @@ export function PageHeaderView({
       <div className="flex flex-nowrap items-center justify-between gap-3">
         <nav aria-label="Page sections" className="relative min-w-0 flex-1">
           <h2 className="sr-only">{title}</h2>
-          <ul className="flex flex-nowrap justify-start gap-2  ">
+          <ul
+            ref={navListRef}
+            className="flex flex-nowrap justify-center gap-2"
+          >
             {navItems.map((item) => {
               const isActive = item.href === activeHref;
 
               return (
                 <li key={item.href} className="shrink-0">
                   <a
+                    data-nav-href={item.href}
                     href={item.href}
                     aria-label={item.label}
                     aria-current={isActive ? "location" : undefined}
-                    className={`inline-flex min-h-10 items-center gap-2 whitespace-nowrap rounded-full border px-3 text-xs font-semibold uppercase tracking-[0.08em] shadow-[inset_0_1px_0_rgba(255,255,255,0.8),0_6px_14px_rgba(21,30,35,0.08)] transition focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--accent)] sm:px-4 ${
+                    className={`page-nav-item inline-flex min-h-10 items-center gap-2 whitespace-nowrap rounded-full border px-3 text-xs font-semibold uppercase tracking-[0.08em] shadow-[inset_0_1px_0_rgba(255,255,255,0.8),0_6px_14px_rgba(21,30,35,0.08)] transition focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--accent)] sm:px-4 ${
                       isActive
                         ? "border-[var(--accent)]/70 bg-[var(--accent)]/14 text-[var(--ink)]"
                         : "border-white/60 bg-white/50 text-[var(--ink-soft)] hover:border-[var(--accent)]/55 hover:bg-white/68 hover:text-[var(--ink)]"

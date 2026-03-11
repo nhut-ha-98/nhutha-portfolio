@@ -8,7 +8,6 @@ import { LandingScaffold } from "@/components/ui/LandingScaffold";
 export function PortfolioLanding() {
   return (
     <>
-      <PageHeader />
       <LandingScaffold>
         <HeroSection />
         <SkillsSection />
@@ -16,6 +15,7 @@ export function PortfolioLanding() {
         <ProjectsSection />
         {/* <ContactSection /> */}
       </LandingScaffold>
+      <PageHeader />
     </>
   );
 }
