@@ -1,7 +1,8 @@
-import { data } from "@/data/data";
 import GoogleAnalytics from "@/components/headless/GoogleAnalytics";
+import { data } from "@/data/data";
 import type { Metadata } from "next";
 import { JetBrains_Mono, Space_Grotesk } from "next/font/google";
+import { Suspense } from "react";
 import "./globals.css";
 
 const fontDisplay = Space_Grotesk({
@@ -29,7 +30,9 @@ export default function RootLayout({
       <body
         className={`${fontDisplay.variable} ${fontMono.variable} antialiased`}
       >
-        <GoogleAnalytics />
+        <Suspense fallback={null}>
+          <GoogleAnalytics />
+        </Suspense>
         {children}
       </body>
     </html>
