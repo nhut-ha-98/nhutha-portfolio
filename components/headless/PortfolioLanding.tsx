@@ -1,4 +1,3 @@
-import { ContactSection } from "@/components/headless/ContactSection";
 import { ExperienceSection } from "@/components/headless/ExperienceSection";
 import { HeroSection } from "@/components/headless/HeroSection";
 import { PageHeader } from "@/components/headless/PageHeader";
@@ -15,7 +14,7 @@ export function PortfolioLanding() {
         <SkillsSection />
         <ExperienceSection />
         <ProjectsSection />
-        <ContactSection />
+        {/* <ContactSection /> */}
       </LandingScaffold>
     </>
   );

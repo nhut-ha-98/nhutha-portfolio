@@ -3,6 +3,7 @@ import { HeroContactLinks } from "@/components/ui/HeroContactLinks";
 import type { AboutMe, Socialnetwork } from "@/data/rendercv";
 import { Icon } from "@iconify/react";
 import Image from "next/image";
+import { AboutMeSection } from "./AboutMeSection";
 const highlightBadges = [
   { label: "Java", icon: "devicon:java", color: "#007396" },
   {
@@ -41,10 +42,6 @@ interface HeroViewProps {
   about: AboutMe[];
 }
 
-function cleanRichText(text: string) {
-  return text.replaceAll("**", "");
-}
-
 export function HeroView({
   name,
   headline,
@@ -55,10 +52,10 @@ export function HeroView({
   social,
   about,
 }: HeroViewProps) {
-  const featureItems = about.slice(0, 3);
+  const featureItems = about;
 
   return (
-    <div className="grid gap-8 lg:grid-cols-[1.2fr_0.8fr] lg:gap-12">
+    <div className="space-y-10">
       <article className="space-y-6">
         <div className="flex items-center gap-5">
           <AvatarView name={name} src={photo} size="lg" />
@@ -69,9 +66,9 @@ export function HeroView({
         <p className="text-balance text-lg font-semibold text-[var(--ink-soft)] sm:text-xl">
           {headline}
         </p>
-        <p className="font-mono text-xs uppercase tracking-[0.14em] text-[var(--muted)]">
+        {/* <p className="font-mono text-xs uppercase tracking-[0.14em] text-[var(--muted)]">
           {location}
-        </p>
+        </p> */}
 
         <HeroContactLinks email={email} phone={phone} social={social} />
 
@@ -122,24 +119,7 @@ export function HeroView({
         </div>
       </article>
 
-      <aside className="relative overflow-hidden rounded-3xl border border-[var(--line)] bg-white p-6 shadow-[var(--shadow-card)] sm:p-8">
-        <div className="absolute -right-16 -top-14 h-44 w-44 rounded-full bg-[radial-gradient(circle,_rgba(236,130,61,0.35),_transparent_66%)]" />
-        <div className="relative space-y-4">
-          {featureItems.map((item) => (
-            <article
-              key={item.label}
-              className="rounded-xl bg-[var(--surface)] p-4"
-            >
-              <h3 className="text-sm font-bold uppercase tracking-[0.08em] text-[var(--ink-soft)]">
-                {item.label}
-              </h3>
-              <p className="mt-2 text-sm leading-6 text-[var(--muted-strong)]">
-                {cleanRichText(item.details)}
-              </p>
-            </article>
-          ))}
-        </div>
-      </aside>
+      <AboutMeSection featureItems={featureItems} />
     </div>
   );
 }

@@ -82,7 +82,7 @@ export function PageHeaderView({
       <div className="flex flex-nowrap items-center justify-between gap-3">
         <nav aria-label="Page sections" className="relative min-w-0 flex-1">
           <h2 className="sr-only">{title}</h2>
-          <ul className="flex flex-nowrap justify-start gap-2  overflow-x-auto">
+          <ul className="flex flex-nowrap justify-start gap-2  ">
             {navItems.map((item) => {
               const isActive = item.href === activeHref;
 
