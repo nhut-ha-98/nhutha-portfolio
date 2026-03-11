@@ -1,3 +1,5 @@
+import Image from "next/image";
+
 interface ExperienceCard {
   title: string;
   subtitle: string;
@@ -58,6 +60,8 @@ interface EducationCard {
   institution: string;
   area: string;
   period: string;
+  logoSrc?: string;
+  logoAlt?: string;
 }
 
 interface EducationViewProps {
@@ -76,13 +80,30 @@ export function EducationView({
           key={`${item.institution}-${item.period}`}
           className="border-b border-[var(--line)] pb-4 last:border-b-0 last:pb-0"
         >
-          <p className="font-semibold text-[var(--ink-soft)]">
-            {item.institution}
-          </p>
-          <p className="mt-1 text-sm text-[var(--muted-strong)]">{item.area}</p>
-          <p className="mt-2 font-mono text-xs uppercase tracking-[0.13em] text-[var(--muted)]">
-            {item.period}
-          </p>
+          <div className="flex items-start gap-4">
+            {item.logoSrc ? (
+              <div className="relative h-12 w-12 shrink-0 overflow-hidden rounded-md ">
+                <Image
+                  src={item.logoSrc}
+                  alt={item.logoAlt ?? item.institution}
+                  fill
+                  sizes="48px"
+                  className="object-contain p-1"
+                />
+              </div>
+            ) : null}
+            <div className="min-w-0">
+              <p className="font-semibold text-[var(--ink-soft)]">
+                {item.institution}
+              </p>
+              <p className="mt-1 text-sm text-[var(--muted-strong)]">
+                {item.area}
+              </p>
+              <p className="mt-2 font-mono text-xs uppercase tracking-[0.13em] text-[var(--muted)]">
+                {item.period}
+              </p>
+            </div>
+          </div>
         </article>
       ))}
     </section>

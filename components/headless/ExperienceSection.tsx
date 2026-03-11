@@ -7,6 +7,26 @@ function dateRange(start: string, end: string | null) {
   return `${start} - ${end ?? "present"}`;
 }
 
+function educationLogo(institution: string) {
+  const value = institution.toLowerCase();
+
+  if (value.includes("bach khoa") || value.includes("hcmut")) {
+    return {
+      logoSrc: "/back-khoa-logo.webp",
+      logoAlt: "Bach Khoa TPHCM logo",
+    };
+  }
+
+  if (value.includes("amazon web services") || value.includes("aws")) {
+    return {
+      logoSrc: "/saa-c03.png",
+      logoAlt: "AWS Certified Solutions Architect Associate badge",
+    };
+  }
+
+  return {};
+}
+
 export function ExperienceSection() {
   const experiences = data.cv.sections.Experience.map((item) => ({
     title: item.company,
@@ -20,6 +40,7 @@ export function ExperienceSection() {
       institution: item.institution,
       area: item.area,
       period: dateRange(item.start_date, item.end_date),
+      ...educationLogo(item.institution),
     }),
   );
 
