@@ -131,7 +131,7 @@ export function HeroContactLinks({
               ref={(node) => {
                 chipRefs.current[item.id] = node;
               }}
-              className={`inline-flex items-center rounded-full border px-2 py-1 text-xs transition ${
+              className={`inline-flex items-center rounded-full border px-2.5 py-1.5 text-sm transition ${
                 isOpen
                   ? "border-[var(--accent)] bg-[var(--surface)] text-[var(--ink)]"
                   : "border-[var(--line)] bg-white text-[var(--ink-soft)]"
