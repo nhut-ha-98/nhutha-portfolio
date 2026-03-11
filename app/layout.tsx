@@ -1,4 +1,5 @@
 import { data } from "@/data/data";
+import GoogleAnalytics from "@/components/headless/GoogleAnalytics";
 import type { Metadata } from "next";
 import { JetBrains_Mono, Space_Grotesk } from "next/font/google";
 import "./globals.css";
@@ -28,6 +29,7 @@ export default function RootLayout({
       <body
         className={`${fontDisplay.variable} ${fontMono.variable} antialiased`}
       >
+        <GoogleAnalytics />
         {children}
       </body>
     </html>

@@ -31,6 +31,22 @@ Notes:
 - Do not prefix this variable with `NEXT_PUBLIC_`.
 - This project reads `accountServiceJson` on the server only (via Firebase Admin SDK), so private keys are not exposed to the client.
 
+## Google Analytics Setup
+
+This project supports Google Analytics 4 with App Router page-view tracking.
+
+Add this to `.env.local`:
+
+```bash
+NEXT_PUBLIC_GA_MEASUREMENT_ID=G-XXXXXXXXXX
+```
+
+Notes:
+
+- Use your GA4 Measurement ID from Google Analytics Data Stream settings.
+- Keep the `NEXT_PUBLIC_` prefix so the ID is available in browser runtime.
+- If `NEXT_PUBLIC_GA_MEASUREMENT_ID` is missing, analytics scripts are not loaded.
+
 Firestore document shape expected by the app:
 
 ```json

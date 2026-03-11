@@ -20,14 +20,14 @@ const certificationLogos = [
   {
     label: "Back Khoa TP.HCM",
     src: "/back-khoa-logo.webp",
-    width: 68,
-    height: 68,
+    width: 50,
+    height: 50,
   },
   {
     label: "AWS Certified Solutions Architect Associate",
     src: "/saa-c03.png",
-    width: 68,
-    height: 68,
+    width: 50,
+    height: 50,
   },
 ] as const;
 
