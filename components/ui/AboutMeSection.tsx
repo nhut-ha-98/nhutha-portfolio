@@ -3,7 +3,7 @@
 import type { AboutMe } from "@/data/rendercv";
 import { Icon } from "@iconify/react";
 import { animate } from "animejs";
-import { useEffect, useRef } from "react";
+import { useCallback, useEffect, useRef } from "react";
 
 function cleanRichText(text: string) {
   return text.replaceAll("**", "");
@@ -16,6 +16,7 @@ const stats = [
   {
     label: "Projects Completed",
     value: "30+",
+    navigation: "#projects",
   },
 ];
 const timelineAccent = [
@@ -74,26 +75,59 @@ function AboutMeTimeline(props: { featureItems: AboutMe[] }) {
     });
   }, [storyItems.length]);
 
+  const handleNavigate = useCallback((href?: string) => {
+    if (!href) return;
+    try {
+      const el = document.querySelector(href);
+      if (el) {
+        el.scrollIntoView({ behavior: "smooth", block: "start" });
+        return;
+      }
+    } catch {
+      // ignore and fallback to hash
+    }
+
+    // fallback
+    if (globalThis?.location) globalThis.location.hash = href;
+  }, []);
+
   return (
     <aside className="relative rounded-3xl p-6 sm:p-8">
       <section className="relative mb-8">
         <div className="grid gap-6 sm:grid-cols-2 sm:gap-20 max-w-2xl mx-auto">
-          {stats.map((stat, index) => (
-            <article key={stat.label} className="group relative pb-4">
-              <p className="font-mono text-[10px] uppercase tracking-[0.14em] text-[var(--muted)] sm:text-xs">
-                {stat.label}
-              </p>
-              <p className="mt-2 text-5xl font-black leading-none tracking-tight text-[var(--ink)] transition-transform duration-300 group-hover:-translate-y-0.5 sm:text-6xl">
-                {stat.value}
-              </p>
-              <div className="mt-4 h-1.5 w-full rounded-full bg-[color:color-mix(in_srgb,var(--line)_72%,white)]">
-                <span
-                  className="block h-full rounded-full bg-[linear-gradient(90deg,var(--accent),color-mix(in_srgb,var(--accent)_42%,#ffffff))] shadow-[0_0_20px_color-mix(in_srgb,var(--accent)_40%,transparent)]"
-                  style={{ width: index === 0 ? "82%" : "94%" }}
-                />
-              </div>
-            </article>
-          ))}
+          {stats.map((stat, index) => {
+            const nav = (stat as unknown as { navigation?: string }).navigation;
+
+            return (
+              <article key={stat.label} className="group relative pb-4">
+                <p className="font-mono text-[10px] uppercase tracking-[0.14em] text-[var(--muted)] sm:text-xs">
+                  {stat.label}
+                </p>
+
+                {nav ? (
+                  <button
+                    type="button"
+                    onClick={() => handleNavigate(nav)}
+                    className="mt-2 text-5xl font-black leading-none tracking-tight text-[var(--ink)] transition-transform duration-200 hover:text-[var(--accent)] sm:text-6xl"
+                    aria-label={`Navigate to ${stat.label}`}
+                  >
+                    {stat.value}
+                  </button>
+                ) : (
+                  <p className="mt-2 text-5xl font-black leading-none tracking-tight text-[var(--ink)] transition-transform duration-300 group-hover:-translate-y-0.5 sm:text-6xl">
+                    {stat.value}
+                  </p>
+                )}
+
+                <div className="mt-4 h-1.5 w-full rounded-full bg-[color:color-mix(in_srgb,var(--line)_72%,white)]">
+                  <span
+                    className="block h-full rounded-full bg-[linear-gradient(90deg,var(--accent),color-mix(in_srgb,var(--accent)_42%,#ffffff))] shadow-[0_0_20px_color-mix(in_srgb,var(--accent)_40%,transparent)]"
+                    style={{ width: index === 0 ? "82%" : "94%" }}
+                  />
+                </div>
+              </article>
+            );
+          })}
         </div>
       </section>
 
