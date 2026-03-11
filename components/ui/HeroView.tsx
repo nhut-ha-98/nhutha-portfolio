@@ -64,9 +64,9 @@ export function HeroView({
           <p className="text-balance text-lg font-semibold text-[var(--ink-soft)] sm:text-xl">
             {headline}
           </p>
-          <p className="font-mono text-xs uppercase tracking-[0.14em] text-[var(--muted)]">
+          {/* <p className="font-mono text-xs uppercase tracking-[0.14em] text-[var(--muted)]">
             {location}
-          </p>
+          </p> */}
         </div>
       </div>
 
