@@ -1,3 +1,8 @@
+"use client";
+
+import { useEffect, useRef } from "react";
+import { animate, stagger } from "animejs";
+
 interface FeaturedProject {
   name: string;
   period: string;
@@ -32,94 +37,167 @@ export function ProjectsView({
   otherProjects,
   awards,
 }: ProjectsViewProps) {
+  const rootRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const el = rootRef.current;
+    if (!el) return;
+
+    // Section headers
+    animate(el.querySelectorAll("[data-anim='heading']"), {
+      opacity: [0, 1],
+      translateY: [-10, 0],
+      delay: stagger(80),
+      duration: 500,
+      easing: "easeOutQuart",
+    });
+
+    // Featured project articles
+    animate(el.querySelectorAll("[data-anim='featured']"), {
+      opacity: [0, 1],
+      translateY: [24, 0],
+      delay: stagger(100, { start: 60 }),
+      duration: 600,
+      easing: "easeOutQuart",
+    });
+
+    // Other project items
+    animate(el.querySelectorAll("[data-anim='compact']"), {
+      opacity: [0, 1],
+      translateY: [16, 0],
+      delay: stagger(70, { start: 120 }),
+      duration: 500,
+      easing: "easeOutQuart",
+    });
+
+    // Award items
+    animate(el.querySelectorAll("[data-anim='award']"), {
+      opacity: [0, 1],
+      translateX: [-12, 0],
+      delay: stagger(60, { start: 100 }),
+      duration: 450,
+      easing: "easeOutQuart",
+    });
+  }, []);
+
   return (
-    <div className="space-y-8">
-      <section aria-label={featuredTitle} className="space-y-4">
-        <h3 className="text-xl font-bold text-[var(--ink)]">{featuredTitle}</h3>
-        <div className="grid gap-4 md:grid-cols-2">
-          {featuredProjects.map((project) => (
+    <div ref={rootRef} className="space-y-14">
+      {/* Featured Projects */}
+      <section aria-label={featuredTitle}>
+        <h3
+          data-anim="heading"
+          className="mb-8 text-xs font-semibold uppercase tracking-[0.18em] text-[var(--accent)]"
+        >
+          {featuredTitle}
+        </h3>
+        <div className="space-y-10">
+          {featuredProjects.map((project, i) => (
             <article
               key={project.name}
-              className="rounded-2xl border border-[var(--line)] bg-white p-6 shadow-[var(--shadow-card)]"
+              data-anim="featured"
+              style={{ opacity: 0 }}
             >
-              <div className="flex items-start justify-between gap-3">
-                <h4 className="text-lg font-semibold text-[var(--ink-soft)]">
+              <div className="flex items-baseline justify-between gap-4">
+                <h4 className="text-xl font-bold text-[var(--ink)]">
                   {project.name}
                 </h4>
-                <p className="font-mono text-xs uppercase tracking-[0.13em] text-[var(--muted)]">
+                <span className="shrink-0 font-mono text-xs tracking-widest text-[var(--muted)]">
                   {project.period}
-                </p>
+                </span>
               </div>
-              <p className="mt-3 text-sm leading-6 text-[var(--muted-strong)]">
+              <p className="mt-2 text-sm leading-7 text-[var(--muted-strong)]">
                 {project.summary}
               </p>
-              <ul className="mt-4 space-y-2">
+              <ul className="mt-4 space-y-1.5">
                 {project.highlights.map((highlight) => (
                   <li
                     key={highlight}
-                    className="flex gap-2 text-sm leading-6 text-[var(--muted-strong)]"
+                    className="flex gap-3 text-sm leading-6 text-[var(--muted)]"
                   >
                     <span
                       aria-hidden
-                      className="mt-2 h-1.5 w-1.5 rounded-full bg-[var(--accent)]"
+                      className="mt-[0.6rem] h-px w-4 shrink-0 bg-[var(--accent)]"
                     />
                     <span>{highlight}</span>
                   </li>
                 ))}
               </ul>
+              {i < featuredProjects.length - 1 && (
+                <hr className="mt-10 border-[var(--line)]" />
+              )}
             </article>
           ))}
         </div>
       </section>
 
-      <section aria-label={otherTitle} className="space-y-4">
-        <h3 className="text-xl font-bold text-[var(--ink)]">{otherTitle}</h3>
-        <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+      {/* Other Projects */}
+      <section aria-label={otherTitle}>
+        <h3
+          data-anim="heading"
+          className="mb-8 text-xs font-semibold uppercase tracking-[0.18em] text-[var(--accent)]"
+        >
+          {otherTitle}
+        </h3>
+        <dl className="grid gap-x-12 gap-y-6 sm:grid-cols-2">
           {otherProjects.map((project) => (
-            <article
+            <div
               key={project.label}
-              className="rounded-xl border border-[var(--line)] bg-[var(--surface)] p-4"
+              data-anim="compact"
+              style={{ opacity: 0 }}
+              className="border-t border-[var(--line)] pt-4"
             >
-              <h4 className="font-semibold text-[var(--ink-soft)]">
+              <dt className="font-semibold text-[var(--ink-soft)]">
                 {project.label}
-              </h4>
-              <p className="mt-2 text-sm leading-6 text-[var(--muted-strong)]">
+              </dt>
+              <dd className="mt-1.5 text-sm leading-6 text-[var(--muted)]">
                 {project.details}
-              </p>
-            </article>
+              </dd>
+            </div>
           ))}
-        </div>
+        </dl>
       </section>
 
-      {awards.length > 0 ? (
-        <section aria-label="Awards" className="space-y-4">
-          <h3 className="text-xl font-bold text-[var(--ink)]">Awards</h3>
-          <ul className="space-y-2">
+      {/* Awards */}
+      {awards.length > 0 && (
+        <section aria-label="Awards">
+          <h3
+            data-anim="heading"
+            className="mb-8 text-xs font-semibold uppercase tracking-[0.18em] text-[var(--accent)]"
+          >
+            Awards
+          </h3>
+          <ul className="space-y-3">
             {awards.map((award) => {
               const parsed = parseMarkdownLink(award);
-              if (parsed.href.length > 0) {
-                return (
-                  <li key={award}>
+              return (
+                <li
+                  key={award}
+                  data-anim="award"
+                  style={{ opacity: 0 }}
+                  className="flex gap-3 text-sm"
+                >
+                  <span
+                    aria-hidden
+                    className="mt-[0.6rem] h-px w-4 shrink-0 bg-[var(--accent)]"
+                  />
+                  {parsed.href ? (
                     <a
                       href={parsed.href}
                       target="_blank"
                       rel="noreferrer"
-                      className="text-sm font-semibold text-[var(--ink-soft)] underline decoration-[var(--accent)] decoration-2 underline-offset-4"
+                      className="font-medium text-[var(--ink-soft)] underline decoration-[var(--accent)] decoration-[1.5px] underline-offset-4 hover:text-[var(--accent)] transition-colors"
                     >
                       {parsed.label}
                     </a>
-                  </li>
-                );
-              }
-              return (
-                <li key={award} className="text-sm text-[var(--muted-strong)]">
-                  {award}
+                  ) : (
+                    <span className="text-[var(--muted-strong)]">{award}</span>
+                  )}
                 </li>
               );
             })}
           </ul>
         </section>
-      ) : null}
+      )}
     </div>
   );
 }
