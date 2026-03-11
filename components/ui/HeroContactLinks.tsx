@@ -1,6 +1,7 @@
 "use client";
 
-import { useMemo, useState } from "react";
+import { animate } from "animejs";
+import { useEffect, useMemo, useRef, useState } from "react";
 import type { Socialnetwork } from "@/data/rendercv";
 import { Icon } from "@iconify/react";
 
@@ -33,6 +34,7 @@ export function HeroContactLinks({
   social,
 }: HeroContactLinksProps) {
   const [activeId, setActiveId] = useState<string>("contact-email");
+  const detailRefs = useRef<Record<string, HTMLAnchorElement | null>>({});
 
   const socialItems = useMemo(
     () =>
@@ -54,6 +56,7 @@ export function HeroContactLinks({
         value: email,
         icon: "mdi:email-outline",
         href: `mailto:${email}`,
+        isExternal: false,
       },
       {
         id: "contact-phone",
@@ -61,11 +64,24 @@ export function HeroContactLinks({
         value: phone,
         icon: "mdi:phone-outline",
         href: `tel:${phone.replaceAll(" ", "")}`,
+        isExternal: false,
       },
-      ...socialItems,
+      ...socialItems.map((item) => ({ ...item, isExternal: true })),
     ],
     [email, phone, socialItems],
   );
+
+  useEffect(() => {
+    const activeDetail = detailRefs.current[activeId];
+    if (!activeDetail) return;
+
+    animate(activeDetail, {
+      opacity: [0, 1],
+      translateX: [8, 0],
+      duration: 220,
+      ease: "out(2)",
+    });
+  }, [activeId]);
 
   return (
     <div className="space-y-2.5">
@@ -77,15 +93,18 @@ export function HeroContactLinks({
           const isOpen = activeId === item.id;
 
           return (
-            <li key={item.id} className="relative">
+            <li
+              key={item.id}
+              className={`inline-flex items-center rounded-full border px-2 py-1 text-xs transition ${
+                isOpen
+                  ? "border-[var(--accent)] bg-[var(--surface)] text-[var(--ink)]"
+                  : "border-[var(--line)] bg-white text-[var(--ink-soft)]"
+              }`}
+            >
               <button
                 type="button"
                 onClick={() => setActiveId(item.id)}
-                className={`inline-flex items-center gap-1.5 rounded-full border px-3 py-1.5 text-xs font-medium transition focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--accent)] ${
-                  isOpen
-                    ? "border-[var(--accent)] bg-[var(--surface)] text-[var(--ink)]"
-                    : "border-[var(--line)] bg-white text-[var(--ink-soft)] hover:border-[var(--accent)] hover:text-[var(--ink)]"
-                }`}
+                className="inline-flex items-center gap-1.5 rounded-full px-1 py-0.5 font-medium transition hover:text-[var(--ink)] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--accent)]"
                 aria-expanded={isOpen}
                 aria-label={`${item.label} details`}
               >
@@ -95,15 +114,33 @@ export function HeroContactLinks({
                   className="h-3.5 w-3.5"
                 />
                 <span>{item.label}</span>
-                {isOpen ? (
-                  <>
-                    <span className="text-[var(--muted)]">|</span>
-                    <span className="font-normal text-[var(--muted-strong)]">
-                      {item.value}
-                    </span>
-                  </>
-                ) : null}
               </button>
+
+              {isOpen ? (
+                <>
+                  <span className="mx-1 text-[var(--muted)]">|</span>
+                  <a
+                    ref={(node) => {
+                      detailRefs.current[item.id] = node;
+                    }}
+                    href={item.href}
+                    target={item.isExternal ? "_blank" : undefined}
+                    rel={item.isExternal ? "noreferrer" : undefined}
+                    className="inline-flex items-center gap-1 font-normal text-[var(--muted-strong)] underline decoration-[var(--line)] underline-offset-4 transition hover:text-[var(--ink)]"
+                  >
+                    <span>{item.value}</span>
+                    <Icon
+                      icon={
+                        item.isExternal
+                          ? "mdi:open-in-new"
+                          : "mdi:chevron-right"
+                      }
+                      aria-hidden="true"
+                      className="h-3.5 w-3.5"
+                    />
+                  </a>
+                </>
+              ) : null}
             </li>
           );
         })}
