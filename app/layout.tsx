@@ -18,6 +18,21 @@ const fontMono = JetBrains_Mono({
 export const metadata: Metadata = {
   title: `${data.cv.name} | Portfolio`,
   description: data.cv.headline,
+  openGraph: {
+    title: `${data.cv.name} | Portfolio`,
+    description: data.cv.headline,
+    images: [
+      {
+        url: "https://nhutha98.vercel.app/me.jpg",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: `${data.cv.name} | Portfolio`,
+    description: data.cv.headline,
+    images: ["https://nhutha98.vercel.app/me.jpg"],
+  },
 };
 
 export default function RootLayout({
