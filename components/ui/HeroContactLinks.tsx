@@ -1,9 +1,9 @@
 "use client";
 
-import { animate } from "animejs";
-import { useEffect, useMemo, useRef, useState } from "react";
 import type { Socialnetwork } from "@/data/rendercv";
 import { Icon } from "@iconify/react";
+import { animate } from "animejs";
+import { useEffect, useMemo, useRef, useState } from "react";
 
 interface HeroContactLinksProps {
   email: string;
@@ -119,7 +119,7 @@ export function HeroContactLinks({
   return (
     <div className="space-y-2.5">
       <ul
-        className="flex flex-wrap gap-2"
+        className="flex flex-wrap gap-2 justify-center"
         aria-label="Contact and social chips"
       >
         {detailItems.map((item) => {

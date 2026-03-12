@@ -108,7 +108,7 @@ export function HeroView({
         </ul>
 
         <span
-          className="h-10 w-px self-center bg-[var(--line)]"
+          className="hidden sm:block h-10 w-px self-center bg-[var(--line)]"
           aria-hidden="true"
         />
 

@@ -92,14 +92,17 @@ function AboutMeTimeline(props: { featureItems: AboutMe[] }) {
   }, []);
 
   return (
-    <aside className="relative rounded-3xl p-6 sm:p-8">
+    <aside className="relative rounded-3xl py-6 px-2 sm:p-8">
       <section className="relative mb-8">
         <div className="grid gap-6 sm:grid-cols-2 sm:gap-20 max-w-2xl mx-auto">
           {stats.map((stat, index) => {
             const nav = (stat as unknown as { navigation?: string }).navigation;
 
             return (
-              <article key={stat.label} className="group relative pb-4">
+              <article
+                key={stat.label}
+                className="group relative pb-4 px-8 sm:px-0"
+              >
                 <p className="font-mono text-[10px] uppercase tracking-[0.14em] text-[var(--muted)] sm:text-xs">
                   {stat.label}
                 </p>
