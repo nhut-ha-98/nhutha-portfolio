@@ -4,6 +4,7 @@ import type { AboutMe, Socialnetwork } from "@/data/rendercv";
 import { Icon } from "@iconify/react";
 import Image from "next/image";
 import { AboutMeSection } from "./AboutMeSection";
+import { TypingEffect } from "./TypingEffect";
 const highlightBadges = [
   { label: "Java", icon: "devicon:java", color: "#007396" },
   {
@@ -34,7 +35,6 @@ const certificationLogos = [
 interface HeroViewProps {
   name: string;
   headline: string;
-  location: string;
   email: string;
   phone: string;
   photo?: string | null;
@@ -42,24 +42,27 @@ interface HeroViewProps {
   about: AboutMe[];
 }
 
-export function HeroView({
-  name,
-  headline,
-  location,
-  email,
-  phone,
-  photo,
-  social,
-  about,
-}: HeroViewProps) {
+export function HeroView(props: HeroViewProps) {
+  const { name, headline, email, phone, photo, social, about } = props;
+
   return (
     <div className="flex flex-col items-center space-y-8 text-center">
       {/* ── Identity ── */}
       <div className="flex flex-col items-center gap-4">
         <AvatarView name={name} src={photo} size="lg" />
         <div className="space-y-1">
-          <h1 className="text-balance text-4xl font-black leading-tight tracking-tight text-[var(--ink)] sm:text-5xl lg:text-6xl">
-            {name}
+          <h1 className="text-balance leading-tight tracking-tight text-[var(--ink)]">
+            <span className="block text-xs font-bold uppercase tracking-[0.2em] text-[var(--muted)] sm:text-sm">
+              <TypingEffect
+                words={["Hi, I am", "Welcome!", "Great to see you!"]}
+                className="inline-flex items-center"
+              />
+            </span>
+            <span className="mt-1 block text-4xl font-black sm:text-5xl lg:text-6xl">
+              <span className="bg-gradient-to-r from-[var(--ink)] via-[var(--ink-soft)] to-[var(--accent)] bg-clip-text text-transparent">
+                {name}
+              </span>
+            </span>
           </h1>
           <p className="text-balance text-lg font-semibold text-[var(--ink-soft)] sm:text-xl">
             {headline}

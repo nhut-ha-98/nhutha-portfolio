@@ -10,7 +10,6 @@ export function HeroSection() {
       <HeroView
         name={data.cv.name}
         headline={data.cv.headline}
-        location={data.cv.location}
         email={data.cv.email}
         phone={data.cv.phone}
         photo={data.cv.photo}
