@@ -22,10 +22,10 @@ export const data: RenderCvData = {
     phone: "+84 329274848",
     website: null,
     social_networks: [
-      {
-        network: "LinkedIn",
-        username: "nhutha98",
-      },
+      // {
+      //   network: "LinkedIn",
+      //   username: "nhutha98",
+      // },
       {
         network: "GitHub",
         username: "nhut-ha-98",
