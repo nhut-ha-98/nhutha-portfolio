@@ -77,7 +77,7 @@ export function HeroView(props: HeroViewProps) {
       <div className="flex flex-wrap items-center justify-center gap-3">
         <HeroContactLinks email={email} phone={phone} social={social} />
         <a
-          href="/Ha-Le-Nhut-CV-2026-04.pdf"
+          href="/Ha-Le-Nhut-CV-2026-03.pdf"
           download
           className="inline-flex items-center gap-2 rounded-full border border-[var(--accent)] bg-[var(--accent)] px-4 py-2 text-xs font-bold text-white shadow-[0_4px_14px_color-mix(in_srgb,var(--accent)_38%,transparent)] transition duration-200 hover:brightness-110 hover:-translate-y-px focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--accent)]"
         >
