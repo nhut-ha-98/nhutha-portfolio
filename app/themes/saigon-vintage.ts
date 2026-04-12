@@ -8,7 +8,8 @@ import type { Theme } from "./types";
 export const saigonVintageTheme: Theme = {
   name: "saigon-vintage",
   colors: {
-    background: "#f5ead6", // aged paper
+    // background: "#f5ead6", // aged paper
+    background: "#ffbe9857", // aged paper
     foreground: "#2c1e0f", // dark espresso ink
     ink: "#1e1208", // near-black brush ink
     inkSoft: "#3a2812", // dark brown
