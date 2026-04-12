@@ -1,3 +1,4 @@
+import { activeTheme, themeToCssVars } from "@/app/themes";
 import GoogleAnalytics from "@/components/headless/GoogleAnalytics";
 import { data } from "@/data/data";
 import type { Metadata } from "next";
@@ -42,6 +43,13 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
+      <head>
+        <style
+          dangerouslySetInnerHTML={{
+            __html: `:root{${themeToCssVars(activeTheme)}}`,
+          }}
+        />
+      </head>
       <body
         className={`${fontDisplay.variable} ${fontMono.variable} antialiased`}
       >

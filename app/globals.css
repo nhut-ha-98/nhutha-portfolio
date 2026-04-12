@@ -1,17 +1,6 @@
 @import "tailwindcss";
 
-:root {
-  --background: #f8f2e5;
-  --foreground: #1a252a;
-  --ink: #122026;
-  --ink-soft: #1f333a;
-  --muted: #5c6d73;
-  --muted-strong: #43555d;
-  --line: #d8cdb5;
-  --surface: #fffdfa;
-  --accent: #dd6c2f;
-  --shadow-card: 0 10px 26px rgba(46, 43, 28, 0.09);
-}
+/* CSS variables are injected at runtime from app/themes/index.ts */
 
 @theme inline {
   --color-background: var(--background);
@@ -33,9 +22,9 @@ body::before {
   position: fixed;
   inset: 0;
   pointer-events: none;
-  background-image: linear-gradient(rgba(92, 109, 115, 0.11) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(92, 109, 115, 0.09) 1px, transparent 1px);
-  background-size: 36px 36px;
+  background-image: linear-gradient(var(--grid-line) 1px, transparent 1px),
+    linear-gradient(90deg, var(--grid-line-secondary) 1px, transparent 1px);
+  background-size: var(--grid-size);
   mask-image: radial-gradient(circle at center, black 50%, transparent 100%);
   z-index: -1;
 }
