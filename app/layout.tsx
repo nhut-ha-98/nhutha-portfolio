@@ -49,6 +49,7 @@ export default function RootLayout({
             __html: `:root{${themeToCssVars(activeTheme)}}`,
           }}
         />
+        <link rel="stylesheet" href={`/themes/${activeTheme.name}.css`} />
       </head>
       <body
         className={`${fontDisplay.variable} ${fontMono.variable} antialiased`}

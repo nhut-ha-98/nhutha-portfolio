@@ -1,0 +1,12 @@
+/* Midnight theme overlay — subtle grid suited for dark backgrounds */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  background-image: linear-gradient(color-mix(in_srgb, var(--grid-line) 22%, transparent) 1px, transparent 1px),
+    linear-gradient(90deg, color-mix(in_srgb, var(--grid-line-secondary) 16%, transparent) 1px, transparent 1px);
+  background-size: var(--grid-size);
+  mask-image: radial-gradient(circle at center, rgba(0,0,0,0.55) 40%, transparent 100%);
+  z-index: -1;
+}

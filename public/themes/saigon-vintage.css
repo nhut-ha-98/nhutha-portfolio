@@ -1,0 +1,12 @@
+/* Saigon Vintage overlay — warm, papery grid */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  background-image: linear-gradient(var(--grid-line) 1px, transparent 1px),
+    linear-gradient(90deg, var(--grid-line-secondary) 1px, transparent 1px);
+  background-size: var(--grid-size);
+  mask-image: radial-gradient(circle at center, rgba(0,0,0,0.25) 45%, transparent 100%);
+  z-index: -1;
+}
