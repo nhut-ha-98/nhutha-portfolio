@@ -26,3 +26,69 @@ body::before {
   /* Slight transparency so page background can show through */
   opacity: 0.95;
 }
+
+/* Floating shapes used to add soft motion; hidden from assistive tech */
+.floating-shapes {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  overflow: hidden;
+}
+
+.floating-shape {
+  position: absolute;
+  display: grid;
+  place-items: center;
+  filter: blur(0.4px) saturate(0.95);
+  mix-blend-mode: multiply;
+  opacity: 0.95;
+  transform-origin: center;
+  will-change: transform, opacity, left, top;
+  animation-name: float-and-fade;
+  animation-timing-function: ease-in-out;
+  animation-iteration-count: infinite;
+}
+
+@keyframes float-and-fade {
+  0% {
+    transform: translateY(0) scale(1) rotate(0deg);
+    opacity: 0;
+  }
+  10% {
+    opacity: 0.55;
+  }
+  50% {
+    transform: translateY(-18vh) scale(1.05) rotate(20deg);
+    opacity: 0.6;
+  }
+  90% {
+    opacity: 0.2;
+  }
+  100% {
+    transform: translateY(-26vh) scale(1.08) rotate(40deg);
+    opacity: 0;
+  }
+}
+
+.floating-shape svg {
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+/* Force Iconify/inline svgs to render as outlines: remove fills and use stroke. */
+.floating-shape svg,
+.floating-shape svg * {
+  fill: none !important;
+  stroke: currentColor !important;
+  stroke-width: 0.9px !important;
+  stroke-linecap: round !important;
+  stroke-linejoin: round !important;
+  vector-effect: non-scaling-stroke !important;
+}
+
+.floating-shape svg path[fill-rule] {
+  /* Some icon sets use complex filled paths; ensure they don't block outline */
+  fill: none !important;
+}

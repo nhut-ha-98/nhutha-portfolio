@@ -57,6 +57,7 @@ export default function RootLayout({
         <Suspense fallback={null}>
           <GoogleAnalytics />
         </Suspense>
+        {/* <FloatingShapes /> */}
         {children}
       </body>
     </html>
