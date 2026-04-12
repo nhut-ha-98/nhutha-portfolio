@@ -1,3 +1,4 @@
+import { constellationTheme } from "./constellation";
 import { midnightTheme } from "./midnight";
 import { parchmentTheme } from "./parchment";
 import { saigonVintageTheme } from "./saigon-vintage";
@@ -8,6 +9,7 @@ export const themes = {
   parchment: parchmentTheme,
   midnight: midnightTheme,
   saigonVintage: saigonVintageTheme,
+  constellation: constellationTheme,
 } as const;
 
 export type ThemeName = keyof typeof themes;

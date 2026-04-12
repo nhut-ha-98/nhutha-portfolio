@@ -1,12 +1,28 @@
-/* Saigon Vintage overlay — warm, papery grid */
+/* Saigon Vintage overlay — warm linen texture (replaces papery grid) */
 body::before {
   content: "";
   position: fixed;
   inset: 0;
   pointer-events: none;
-  background-image: linear-gradient(var(--grid-line) 1px, transparent 1px),
-    linear-gradient(90deg, var(--grid-line-secondary) 1px, transparent 1px);
-  background-size: var(--grid-size);
-  mask-image: radial-gradient(circle at center, rgba(0,0,0,0.25) 45%, transparent 100%);
   z-index: -1;
+
+  /* Base tint to keep the vintage warmth; falls back to a soft paper color */
+  background-color: var(--paper-bg, #f6efe4);
+
+  /* Layered gradients to create a subtle linen/fabric texture:
+     - gentle overall noise/brightness gradient
+     - very fine repeating linear gradient to simulate weave
+     - soft radial blotch for depth */
+  background-image:
+    linear-gradient(180deg, rgba(255,255,255,0.02), rgba(0,0,0,0.02)),
+    repeating-linear-gradient(90deg, rgba(0,0,0,0.012) 0 1px, transparent 1px 6px),
+    radial-gradient(circle at 30% 20%, rgba(0,0,0,0.02), transparent 40%);
+
+  background-blend-mode: overlay;
+
+  /* Soft vignette to focus content toward center */
+  mask-image: radial-gradient(circle at center, rgba(0,0,0,0.25) 45%, transparent 100%);
+
+  /* Slight transparency so page background can show through */
+  opacity: 0.95;
 }
